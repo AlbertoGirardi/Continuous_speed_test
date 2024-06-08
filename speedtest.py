@@ -5,6 +5,7 @@ import schedule
 import time
 import csv
 from datetime import datetime
+import plotting
 
 def run_speedtest():
     # Run the speedtest-cli command and get the JSON output
@@ -20,7 +21,7 @@ def extract_values(data):
 
 def save_to_file():
     # Save the values to a file
-    print("in esecuzione")
+    print("in esecuzione  ",datetime.now().strftime("%H:%M:%S"))
     data = run_speedtest()
     print("finito")
 
@@ -34,12 +35,27 @@ def save_to_file():
     ping, download, upload = extract_values(data)
     print(ping, download, upload)
 
-    current_time = datetime.now().strftime("%H:%M:%S")
+    current_time = datetime.now().strftime("%H:%M")
     filename = os.path.join(subfolder_path, data_file_name)
     with open(filename, 'a', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         # Write the values and current time to the CSV file
         csvwriter.writerow([current_time, ping, round(download,1), round(upload,1)])
+
+
+    plotting.plot_data(subfolder_path, data_file_name)
+
+    
+    current_time = datetime.now()
+    if current_time.hour == time_to_send_email[0] and current_time.minute >  time_to_send_email[1]:
+            
+        file_path = os.path.join(subfolder_path, "done.txt")
+        
+        # Check if the file exists
+        if os.path.exists(file_path):
+            print("email already sent")
+        else:
+            plotting.send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
 
 
 
@@ -54,7 +70,7 @@ def main():
         # print('a')
         schedule.run_pending()
         time.sleep(1)
-        print(datetime.now().strftime("%H:%M:%S"))
+      
 
 
         
@@ -62,6 +78,7 @@ def main():
 
 data_file_name = "data.csv"
 data_folder_name = "data"
+time_to_send_email = [21, 56]
 
 if __name__ == "__main__":
     main()
