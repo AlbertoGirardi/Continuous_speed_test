@@ -39,7 +39,7 @@ def save_to_file():
     with open(filename, 'a', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         # Write the values and current time to the CSV file
-        csvwriter.writerow([current_time, ping, download, upload])
+        csvwriter.writerow([current_time, ping, round(download,1), round(upload,1)])
 
 
 
