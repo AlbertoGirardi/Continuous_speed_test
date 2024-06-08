@@ -116,7 +116,10 @@ UPLOAD[MB/s]:   \tavg:{round(average_values[2],1)}\tmax:{round(max_values[2],1)}
     smtp_server = "smtp.libero.it"  # SMTP server address
     smtp_port = 587  # SMTP port (587 for TLS)
     sender_email = "motore1234567@libero.it"  # Your email address
-    sender_password = "Motore123!"  # Your email password
+
+    with open("password.txt", 'r') as file:
+        sender_password = file.read().strip()
+    
 
     with smtplib.SMTP(smtp_server, smtp_port) as server:
         server.starttls()

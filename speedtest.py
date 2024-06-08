@@ -55,7 +55,7 @@ def save_to_file():
         if os.path.exists(file_path):
             print("email already sent")
         else:
-            plotting.send_email(subfolder_path, data_file_name)
+            plotting.send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
 
 
 
