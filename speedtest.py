@@ -7,6 +7,8 @@ import csv
 from datetime import datetime
 import plotting
 
+
+
 def run_speedtest():
     # Run the speedtest-cli command and get the JSON output
     result = subprocess.run(['speedtest-cli', '--secure', '--json'], stdout=subprocess.PIPE)
@@ -46,18 +48,6 @@ def save_to_file():
     plotting.plot_data(subfolder_path, data_file_name)
 
     
-    current_time = datetime.now()
-    if current_time.hour == time_to_send_email[0] and current_time.minute >  time_to_send_email[1]:
-            
-        file_path = os.path.join(subfolder_path, "done.txt")
-        
-        # Check if the file exists
-        if os.path.exists(file_path):
-            print("email already sent")
-        else:
-            plotting.send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
-
-
 
 
 def main():
@@ -70,6 +60,23 @@ def main():
         # print('a')
         schedule.run_pending()
         time.sleep(1)
+
+            
+        current_time = datetime.now()
+        if current_time.hour == time_to_send_email[0] and current_time.minute >  time_to_send_email[1]:
+            
+            current_date = datetime.now().strftime("%d-%m-%Y")
+            # Create the path for the new subfolder
+            subfolder_path = os.path.join(data_folder_name, current_date)
+            file_path = os.path.join(subfolder_path, "done.txt")
+            
+            # Check if the file exists
+            if os.path.exists(file_path):
+                print("email already sent")
+            else:
+                plotting.send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
+
+
       
 
 
@@ -78,7 +85,7 @@ def main():
 
 data_file_name = "data.csv"
 data_folder_name = "data"
-time_to_send_email = [21, 56]
+time_to_send_email = [23, 50]
 
 if __name__ == "__main__":
     main()
