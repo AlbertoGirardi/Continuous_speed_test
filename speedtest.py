@@ -3,7 +3,7 @@ import subprocess
 
 def run_speedtest():
     # Run the speedtest-cli command and get the JSON output
-    result = subprocess.run(['speedtest-cli', '--json'], stdout=subprocess.PIPE)
+    result = subprocess.run(['speedtest-cli', '--secure', '--json'], stdout=subprocess.PIPE)
     return json.loads(result.stdout)
 
 def extract_values(data):
