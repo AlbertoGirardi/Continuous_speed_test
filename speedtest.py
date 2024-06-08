@@ -1,5 +1,7 @@
 import json
 import subprocess
+import os
+import schedule 
 
 def run_speedtest():
     # Run the speedtest-cli command and get the JSON output
@@ -15,19 +17,24 @@ def extract_values(data):
 
 def save_to_file(filename, ping, download, upload):
     # Save the values to a file
-    with open(filename, 'w') as f:
-        f.write(f"Ping: {ping} ms\n")
-        f.write(f"Download: {download:.2f} Mbps\n")
-        f.write(f"Upload: {upload:.2f} Mbps\n")
+    pass
 
 def main():
-    print("in esecuzione")
-    data = run_speedtest()
-    print("finito")
 
-    ping, download, upload = extract_values(data)
-    print(ping, download, upload)
-    # save_to_file('speedtest_results.txt', ping, download, upload)
+    os.makedirs(data_folder_name, exist_ok=True)
+
+    while 1:
+
+        print("in esecuzione")
+        data = run_speedtest()
+        print("finito")
+
+        ping, download, upload = extract_values(data)
+        print(ping, download, upload)
+        # save_to_file('speedtest_results.txt', ping, download, upload)
+
+data_file = ""
+data_folder_name = "data"
 
 if __name__ == "__main__":
     main()
