@@ -48,7 +48,7 @@ def plot_data(subfolder_path, data_file_name):
     plt.tick_params(axis='x', labelsize=6)  # Set the font size of x-axis labels
 
     plt.savefig(os.path.join(subfolder_path, "connectivity_graph.png"))
-    plt.show()
+    # plt.show()
     plt.close()
     
 
@@ -124,9 +124,14 @@ UPLOAD[MB/s]:   \tavg:{round(average_values[2],1)}\tmax:{round(max_values[2],1)}
         server.sendmail(sender_email, recipient_email, msg.as_string())
 
     print("Email sent successfully!")
+    file_path = os.path.join(subfolder_path, "done.txt")
+    with open(file_path, 'w'):
+        pass
 
-# Example usage:
-subfolder_path = "data\\08-06-2024"
-data_file_name = "data.csv"  # Adjust as needed
-plot_data(subfolder_path, data_file_name)
-send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
+if __name__ == "__main__":
+        
+    # Example usage:
+    subfolder_path = "data\\08-06-2024"
+    data_file_name = "data.csv"  # Adjust as needed
+    plot_data(subfolder_path, data_file_name)
+    send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")

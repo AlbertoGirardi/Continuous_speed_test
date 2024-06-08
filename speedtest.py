@@ -5,6 +5,7 @@ import schedule
 import time
 import csv
 from datetime import datetime
+import plotting
 
 def run_speedtest():
     # Run the speedtest-cli command and get the JSON output
@@ -42,6 +43,21 @@ def save_to_file():
         csvwriter.writerow([current_time, ping, round(download,1), round(upload,1)])
 
 
+    plotting.plot_data(subfolder_path, data_file_name)
+
+    
+    current_time = datetime.now()
+    if current_time.hour == time_to_send_email[0] and current_time.minute >  time_to_send_email[1]:
+            
+        file_path = os.path.join(subfolder_path, "done.txt")
+        
+        # Check if the file exists
+        if os.path.exists(file_path):
+            print("email already sent")
+        else:
+            plotting.send_email(subfolder_path, data_file_name)
+
+
 
 
 def main():
@@ -62,6 +78,7 @@ def main():
 
 data_file_name = "data.csv"
 data_folder_name = "data"
+time_to_send_email = [21, 56]
 
 if __name__ == "__main__":
     main()
