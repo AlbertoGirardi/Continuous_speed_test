@@ -20,7 +20,7 @@ def extract_values(data):
 
 def save_to_file():
     # Save the values to a file
-    print("in esecuzione")
+    print("in esecuzione  ",datetime.now().strftime("%H:%M:%S"))
     data = run_speedtest()
     print("finito")
 
@@ -34,7 +34,7 @@ def save_to_file():
     ping, download, upload = extract_values(data)
     print(ping, download, upload)
 
-    current_time = datetime.now().strftime("%H:%M:%S")
+    current_time = datetime.now().strftime("%H:%M")
     filename = os.path.join(subfolder_path, data_file_name)
     with open(filename, 'a', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
@@ -54,7 +54,7 @@ def main():
         # print('a')
         schedule.run_pending()
         time.sleep(1)
-        print(datetime.now().strftime("%H:%M:%S"))
+      
 
 
         
