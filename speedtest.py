@@ -52,6 +52,7 @@ def save_to_file():
 
 def main():
     t = 5  # minutes
+    print("STARTUP OF CONTINUOS SPEED TEST")
 
     schedule.every(t).minutes.do(save_to_file)   
     os.makedirs(data_folder_name, exist_ok=True)
