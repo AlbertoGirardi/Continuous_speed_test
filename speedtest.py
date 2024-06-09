@@ -6,6 +6,7 @@ import time
 import csv
 from datetime import datetime
 import plotting
+import sys
 
 
 
@@ -61,6 +62,7 @@ def main():
         # print('a')
         schedule.run_pending()
         time.sleep(1)
+        sys.stdout.flush()
 
             
         current_time = datetime.now()
