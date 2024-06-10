@@ -8,7 +8,8 @@ from datetime import datetime
 import plotting
 import sys
 
-
+max_retries = 5  # Set the maximum number of retries
+retry_delay = 1  # Initial delay between retries (in seconds)
 
 def run_speedtest():
     # Run the speedtest-cli command and get the JSON output
@@ -25,7 +26,24 @@ def extract_values(data):
 def save_to_file():
     # Save the values to a file
     print("in esecuzione  ",datetime.now().strftime("%H:%M:%S"))
-    data = run_speedtest()
+
+    retries = 0
+    while retries < max_retries:
+        try:
+            data = run_speedtest()
+            
+            break  # Break out of the loop if successful
+        except Exception as e:
+            print(f"Exception occurred: {e}")
+            print(f"Retrying in {retry_delay} seconds...")
+            time.sleep(retry_delay)
+            retries += 1
+            retry_delay *= 1.5  # Exponential backoff for next retry
+
+    if retries == max_retries:
+        print("Max retries exceeded without success")
+        raise RuntimeError("FAILURE: could not execute speedtest")
+        
     print("finito")
 
 
@@ -53,7 +71,7 @@ def save_to_file():
 
 def main():
     t = 5  # minutes
-    print("STARTUP OF CONTINUOS SPEED TEST")
+    print("STARTUP OF CONTINUOS SPEED TEST")    
 
     schedule.every(t).minutes.do(save_to_file)   
     os.makedirs(data_folder_name, exist_ok=True)

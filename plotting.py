@@ -49,7 +49,7 @@ def plot_data(subfolder_path, data_file_name):
     # Display only 1 out of 5 labels on the x-axis
     x_values = df[time_column]
     num_labels = len(x_values)
-    step = num_labels // 5  # Select one out of five
+    step = (num_labels // 5)+1  # Select one out of five
 
     xticks = x_values[::step]  # Select every 'step' label
     xticklabels = [str(label) for label in xticks]  # Convert to strings for labels
