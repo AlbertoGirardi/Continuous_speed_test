@@ -8,7 +8,7 @@ from datetime import datetime
 import plotting
 import sys
 
-max_retries = 5  # Set the maximum number of retries
+max_retries = 8  # Set the maximum number of retries
 retry_delay = 1  # Initial delay between retries (in seconds)
 
 def run_speedtest():
@@ -28,8 +28,10 @@ def save_to_file():
     print("in esecuzione  ",datetime.now().strftime("%H:%M:%S"))
 
     retries = 0
+    retry_delay = 1
     while retries < max_retries:
         try:
+            #raise RuntimeError
             data = run_speedtest()
             
             break  # Break out of the loop if successful
@@ -38,7 +40,7 @@ def save_to_file():
             print(f"Retrying in {retry_delay} seconds...")
             time.sleep(retry_delay)
             retries += 1
-            retry_delay *= 1.5  # Exponential backoff for next retry
+            retry_delay *= 2  # Exponential backoff for next retry
 
     if retries == max_retries:
         print("Max retries exceeded without success")
@@ -66,7 +68,7 @@ def save_to_file():
 
     plotting.plot_data(subfolder_path, data_file_name)
 
-    
+retry_delay = 1  # Initial delay between retries (in seconds)
 
 
 def main():
