@@ -144,7 +144,7 @@ UPLOAD[MB/s]:   \tavg:{round(average_values[2],1)}\tmax:{round(max_values[2],1)}
 if __name__ == "__main__":
         
     # Example usage:
-    subfolder_path = "data\\08-06-2024"
+    subfolder_path = "data\\09-06-2024"
     data_file_name = "data.csv"  # Adjust as needed
     plot_data(subfolder_path, data_file_name)
     #send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
