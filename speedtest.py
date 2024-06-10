@@ -20,7 +20,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-max_retries = 8  # Set the maximum number of retries
+max_retries =  9 # Set the maximum number of retries
 retry_delay = 1  # Initial delay between retries (in seconds)
 
 def run_speedtest():
