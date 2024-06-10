@@ -68,7 +68,7 @@ def save_to_file():
 
     
     ping, download, upload = extract_values(data)
-    print(bcolors.OKBLUE,ping,round(download,1), round(upload,1), bcolors.ENDC, sep='')
+    print(bcolors.OKBLUE,ping,' ',round(download,1),' ', round(upload,1),' ', bcolors.ENDC, sep='')
 
     current_time = datetime.now().strftime("%H:%M")
     filename = os.path.join(subfolder_path, data_file_name)
