@@ -46,6 +46,16 @@ def plot_data(subfolder_path, data_file_name):
     # plt.gca().xaxis.set_major_formatter(DateFormatter('%H:%M:%S'))  # Assuming datetime format, adjust if needed
     plt.xticks(rotation=45)  # Rotate the labels to avoid overlapping
     plt.tick_params(axis='x', labelsize=6)  # Set the font size of x-axis labels
+    # Display only 1 out of 5 labels on the x-axis
+    x_values = df[time_column]
+    num_labels = len(x_values)
+    step = num_labels // 5  # Select one out of five
+
+    xticks = x_values[::step]  # Select every 'step' label
+    xticklabels = [str(label) for label in xticks]  # Convert to strings for labels
+
+    plt.gca().set_xticks(xticks)
+    plt.gca().set_xticklabels(xticklabels)
 
     plt.savefig(os.path.join(subfolder_path, "connectivity_graph.png"))
     # plt.show()
@@ -137,4 +147,4 @@ if __name__ == "__main__":
     subfolder_path = "data\\08-06-2024"
     data_file_name = "data.csv"  # Adjust as needed
     plot_data(subfolder_path, data_file_name)
-    send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
+    #send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
