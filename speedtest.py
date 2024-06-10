@@ -48,7 +48,7 @@ def save_to_file():
             
             break  # Break out of the loop if successful
         except Exception as e:
-            print(f"Exception occurred: {e}")
+            print(f"{bcolors.FAIL}failure{bcolors.ENDC}")
             print(f"Retrying in {retry_delay} seconds...")
             time.sleep(retry_delay)
             retries += 1
@@ -58,7 +58,7 @@ def save_to_file():
         print("Max retries exceeded without success")
         raise RuntimeError("FAILURE: could not execute speedtest")
         
-    print("finito")
+    print(f"{bcolors.OKGREEN}finito{bcolors.ENDC}")
 
 
     current_date = datetime.now().strftime("%d-%m-%Y")
@@ -68,7 +68,7 @@ def save_to_file():
 
     
     ping, download, upload = extract_values(data)
-    print(ping, download, upload)
+    print(bcolors.OKBLUE,ping,round(download,1), round(upload,1), bcolors.ENDC, sep='')
 
     current_time = datetime.now().strftime("%H:%M")
     filename = os.path.join(subfolder_path, data_file_name)
