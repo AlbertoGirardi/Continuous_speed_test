@@ -5,7 +5,7 @@ r:
 	sudo systemctl daemon-reload
 	sudo systemctl restart css.service
 
-start
+start:
 	git pull
 	sudo systemctl daemon-reload
 	sudo systemctl enable css.service
