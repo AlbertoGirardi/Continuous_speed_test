@@ -8,7 +8,7 @@ from datetime import datetime
 import plotting
 import sys
 
-class bcolors:
+class bcolors:  #colors for output
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
@@ -29,25 +29,29 @@ def run_speedtest():
     return json.loads(result.stdout)
 
 def extract_values(data):
-    # Extract the required values
+    # Extract the required values from the speedtest result
     ping = data['ping']
     download = data['download'] / 1_000_000  # Convert from bps to Mbps
     upload = data['upload'] / 1_000_000      # Convert from bps to Mbps
     return ping, download, upload
 
 def save_to_file():
-    # Save the values to a file
+    # executes and then saves the values of the speed test
     print("in esecuzione  ",datetime.now().strftime("%H:%M:%S"))
 
+    #handles potential erros of the speedtest
+    #if an error is detected the program waits and retries until a max amount of times
     retries = 0
     retry_delay = 1
     while retries < max_retries:
         try:
-            #raise RuntimeError
-            data = run_speedtest()
             
+            data = run_speedtest()   #runs the speedtest
             break  # Break out of the loop if successful
+
+
         except Exception as e:
+            #if there is a failure
             print(f"{bcolors.FAIL}failure{bcolors.ENDC}")
             print(f"Retrying in {retry_delay} seconds...")
             time.sleep(retry_delay)
@@ -62,12 +66,12 @@ def save_to_file():
 
 
     current_date = datetime.now().strftime("%d-%m-%Y")
-    # Create the path for the new subfolder
+    # Create the path for the new subfolder, where to store the results
     subfolder_path = os.path.join(data_folder_name, current_date)
     os.makedirs(subfolder_path, exist_ok=True)
 
     
-    ping, download, upload = extract_values(data)
+    ping, download, upload = extract_values(data)       #extracts the values 
     print(bcolors.OKBLUE,ping,' ',round(download,1),' ', round(upload,1),' ', bcolors.ENDC, sep='')
 
     current_time = datetime.now().strftime("%H:%M")
@@ -78,14 +82,16 @@ def save_to_file():
         csvwriter.writerow([current_time, ping, round(download,1), round(upload,1)])
 
 
-    plotting.plot_data(subfolder_path, data_file_name)
+    plotting.plot_data(subfolder_path, data_file_name)   #call the function to plot the data
 
 retry_delay = 1  # Initial delay between retries (in seconds)
 
 
+
+
 def main():
 
-    
+    #opens the settings file to retrieve parameters
     with open('settings.json', 'r') as file:
         settings = json.load(file)
 
@@ -97,16 +103,18 @@ def main():
     
     print("STARTUP OF CONTINUOS SPEED TEST")    
 
+    #sets up the recurrent task of executing the speed test
     schedule.every(t).minutes.do(save_to_file)   
     os.makedirs(data_folder_name, exist_ok=True)
 
+    #forever looo
     while 1:
         # print('a')
         schedule.run_pending()
         time.sleep(1)
         sys.stdout.flush()
 
-            
+        #checks if to send the email, after the given hour
         current_time = datetime.now()
         if current_time.hour == time_to_send_email[0] and current_time.minute >  time_to_send_email[1]:
             
@@ -115,22 +123,20 @@ def main():
             subfolder_path = os.path.join(data_folder_name, current_date)
             file_path = os.path.join(subfolder_path, "done.txt")
             
-            # Check if the file exists
+            # Check if the file exists, meaning that the email has already being sent
             if os.path.exists(file_path):
                 print("email already sent")
             else:
+                #otherwise sends the email to the required address
                 plotting.send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
 
 
       
 
 
-        
-        
-
 data_file_name = "data.csv"
 data_folder_name = "data"
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":   #executable guard
     main()

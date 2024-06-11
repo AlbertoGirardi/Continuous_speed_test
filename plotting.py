@@ -46,7 +46,7 @@ def plot_data(subfolder_path, data_file_name):
     # plt.gca().xaxis.set_major_formatter(DateFormatter('%H:%M:%S'))  # Assuming datetime format, adjust if needed
     plt.xticks(rotation=45)  # Rotate the labels to avoid overlapping
     plt.tick_params(axis='x', labelsize=6)  # Set the font size of x-axis labels
-    # Display only 1 out of 5 labels on the x-axis
+    # Display a total amount of 24 labels
     x_values = df[time_column]
     num_labels = len(x_values)
     n_xlabels = 24
@@ -59,7 +59,7 @@ def plot_data(subfolder_path, data_file_name):
 
     plt.gca().set_xticks(xticks)
     plt.gca().set_xticklabels(xticklabels)
-
+    #saves the plot
     try:
         plt.savefig(os.path.join(subfolder_path, "connectivity_graph.png"))
     except TypeError:
