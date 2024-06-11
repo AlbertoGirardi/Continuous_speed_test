@@ -14,3 +14,6 @@ In the [settings.json](settings.json)  file set the parameters for the frequency
 This program can be loaded onto a rasperry py and used with systemd service
 In that case "make r" git pulls and restarts it.
 "make log" opens journalctl logs.
+
+MADE in Friuli, Italy  by Alberto Girardi
+11/06/2024
