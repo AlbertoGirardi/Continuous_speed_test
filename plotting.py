@@ -60,7 +60,11 @@ def plot_data(subfolder_path, data_file_name):
     plt.gca().set_xticks(xticks)
     plt.gca().set_xticklabels(xticklabels)
 
-    plt.savefig(os.path.join(subfolder_path, "connectivity_graph.png"))
+    try:
+        plt.savefig(os.path.join(subfolder_path, "connectivity_graph.png"))
+    except TypeError:
+        print("As expected, the first plot generation of the day fails")
+
     # plt.show()
     plt.close()
     

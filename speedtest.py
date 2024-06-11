@@ -84,7 +84,17 @@ retry_delay = 1  # Initial delay between retries (in seconds)
 
 
 def main():
-    t = 5  # minutes
+
+    
+    with open('settings.json', 'r') as file:
+        settings = json.load(file)
+
+    t = settings['t']
+    time_to_send_email = settings['time']
+
+    print(f"Speedtest will be executed every: {t} minutes")
+    print(f"time at which daily email is going to be sent: {time_to_send_email}")
+    
     print("STARTUP OF CONTINUOS SPEED TEST")    
 
     schedule.every(t).minutes.do(save_to_file)   
@@ -120,7 +130,7 @@ def main():
 
 data_file_name = "data.csv"
 data_folder_name = "data"
-time_to_send_email = [23, 50]
+
 
 if __name__ == "__main__":
     main()
