@@ -8,6 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+import json
 
 colum_labels = ["Ping [ms]", 'Download [MB/s]', 'Upload [MB/s]']
 
@@ -71,7 +72,7 @@ def plot_data(subfolder_path, data_file_name):
 
 
 
-def send_email(subfolder_path, data_file_name,  recipient_email):
+def send_email(subfolder_path, data_file_name,  recipient_email, sender_email, smtp_server):
     # Step 1: Traverse the folder and locate the file
     file_path = os.path.join(subfolder_path, data_file_name)
     
@@ -130,9 +131,9 @@ UPLOAD[MB/s]:   \tavg:{round(average_values[2],1)}\tmax:{round(max_values[2],1)}
     msg.attach(plot_part)
     
     # Step 8: Send the email
-    smtp_server = "smtp.libero.it"  # SMTP server address
+    
     smtp_port = 587  # SMTP port (587 for TLS)
-    sender_email = "motore1234567@libero.it"  # Your email address
+    
 
     with open("password.txt", 'r') as file:
         sender_password = file.read().strip()
@@ -154,4 +155,7 @@ if __name__ == "__main__":
     subfolder_path = os.path.join("data","08-06-2024")
     data_file_name = "data.csv"  # Adjust as needed
     plot_data(subfolder_path, data_file_name)
-    send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
+    
+    with open('settings.json', 'r') as file:
+        settings = json.load(file)
+    send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com", settings["sender"], settings["server"])

@@ -128,7 +128,7 @@ def main():
                 print("email already sent")
             else:
                 #otherwise sends the email to the required address
-                plotting.send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com")
+                plotting.send_email(subfolder_path, data_file_name, "girardi.alberto71@gmail.com", settings["sender"], settings["server"])
 
 
       
