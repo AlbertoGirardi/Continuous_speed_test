@@ -18,3 +18,8 @@ status:
 
 log:
 	journalctl -u css.service -f
+
+
+logd:
+
+	journalctl -u css --since today
