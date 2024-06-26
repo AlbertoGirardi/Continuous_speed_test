@@ -1,3 +1,4 @@
+
 # CONTINUOUS SPEED TEST
 
 ## GOAL:
@@ -20,3 +21,6 @@ MADE in Friuli, Italy  by Alberto Girardi
 11/06/2024
 
 [![wakatime](https://wakatime.com/badge/user/018b48bf-8d51-471d-b870-e93a045be5f7/project/8239b444-2fd4-4ef4-8166-6acee16ccbff.svg)](https://wakatime.com/badge/user/018b48bf-8d51-471d-b870-e93a045be5f7/project/8239b444-2fd4-4ef4-8166-6acee16ccbff)
+
+
+updated from the pi too!
